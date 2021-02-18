@@ -8,8 +8,16 @@ export default function UserList({ items, active, onActive, visibleClr, loading,
     const [toggleDate, setToggleDate] = React.useState(null);
 
     if (loading) {
-        return <h2 className="inner loading">Loading...</h2>
+        return (
+            <div>
+                <h2 className="inner loading">Loading...<br /></h2>
+                <p className="inner">Если загрузка идет слишком долго проверьте,<br />
+                    <a href="https://5ebbb8e5f2cfeb001697d05c.mockapi.io/users">ссылку</a> на работоспособность.
+                </p>
+            </div>
+        )
     }
+
 
     return (
         <div>
@@ -22,7 +30,7 @@ export default function UserList({ items, active, onActive, visibleClr, loading,
                             //allUsers - correct array for sort in page and application
                             const allUsers = all.slice(0, lastUser - pageSize).concat(items.sort((a, b) => {
                                 return b.registration_date.split('T')[0].split('-').join('') - a.registration_date.split('T')[0].split('-').join('')
-                            }), all.slice(lastUser, 25));
+                            }), all.slice(lastUser, all.length));
 
                             //update all userList
                             refresh(allUsers)
@@ -32,7 +40,7 @@ export default function UserList({ items, active, onActive, visibleClr, loading,
                         else {
                             const allUsers = all.slice(0, lastUser - pageSize).concat(items.sort((a, b) => {
                                 return a.registration_date.split('T')[0].split('-').join('') - b.registration_date.split('T')[0].split('-').join('')
-                            }), all.slice(lastUser, 25));
+                            }), all.slice(lastUser, all.length));
                             refresh(allUsers);
                             setToggleDate(!toggleDate);
                         }
@@ -50,12 +58,12 @@ export default function UserList({ items, active, onActive, visibleClr, loading,
                 <div
                     onClick={() => {
                         if (toggleRatingActive) {
-                            const allUsers = all.slice(0, lastUser - pageSize).concat(items.sort((a, b) => b.rating - a.rating), all.slice(lastUser, 25))
+                            const allUsers = all.slice(0, lastUser - pageSize).concat(items.sort((a, b) => b.rating - a.rating), all.slice(lastUser, all.length))
                             refresh(allUsers);
                             setToggleRatingActive(!toggleRatingActive);
                         }
                         else {
-                            const allUsers = all.slice(0, lastUser - pageSize).concat(items.sort((a, b) => a.rating - b.rating), all.slice(lastUser, 25))
+                            const allUsers = all.slice(0, lastUser - pageSize).concat(items.sort((a, b) => a.rating - b.rating), all.slice(lastUser, all.length))
                             refresh(allUsers);
                             setToggleRatingActive(!toggleRatingActive);
                         }
